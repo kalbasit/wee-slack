@@ -2947,6 +2947,19 @@ def save_distracting_channels():
 
 
 @slack_buffer_required
+def command_reload(data, current_buffer, args):
+    """
+    Reload the history
+    /slack reload
+    """
+    e = EVENTROUTER
+    channel = e.weechat_controller.buffers.get(current_buffer, None)
+    if channel:
+        channel.got_history = False
+        channel.get_history()
+
+
+@slack_buffer_required
 def command_slash(data, current_buffer, args):
     """
     Support for custom slack commands
